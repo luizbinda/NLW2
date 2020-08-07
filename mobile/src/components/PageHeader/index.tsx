@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { View, Image, Text } from "react-native";
 
 import styles from "./styles";
@@ -10,9 +10,14 @@ import logoIcon from "../../assets/images/logo.png";
 
 interface PageHeaderProps {
   title: String;
+  headerRight?: ReactNode;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ title }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({
+  title,
+  headerRight,
+  children,
+}) => {
   const { navigate } = useNavigation();
 
   return (
@@ -23,7 +28,11 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title }) => {
         </BorderlessButton>
         <Image source={logoIcon} resizeMode="contain" />
       </View>
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>{title}</Text>
+        {headerRight && headerRight}
+      </View>
+      {children}
     </View>
   );
 };
